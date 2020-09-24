@@ -143,3 +143,15 @@ data_87_19$VIS[data_87_19$VIS==99] <- NA
 data_87_19$TIDE[data_87_19$TIDE==99] <- NA
 summary(data_87_19,na.rm = TRUE)
 
+
+tmpdata  <-  data_87_19[ , !names(data_87_19) %in% c("WD","WDIR","MWD","VIS","TIDE","DEWP")]
+## tmpdata  <-  na.omit(tmpdata)
+planes <-  group_by(tmpdata, DATE)
+delay  <-  summarise(planes, WSPD = mean(WSPD, na.rm = TRUE),
+                     GST = mean(GST, na.rm = TRUE), 
+                     WVHT = mean(WVHT, na.rm = TRUE), 
+                     DPD = mean(DPD, na.rm = TRUE),
+                     APD = mean(APD, na.rm = TRUE), 
+                     PRES = mean(PRES, na.rm = TRUE),
+                     ATMP = mean(ATMP, na.rm = TRUE), 
+                     WTMP = mean(WTMP, na.rm = TRUE))
